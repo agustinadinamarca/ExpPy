@@ -1,18 +1,14 @@
 # ExpPy
 
-Archivo JSON "parameters.json" donde se encontrará una estructura que contiene los parámetros de un experimento computacional a ejecutar. Esta estructura contiene dos subestructuras una correspondiente a los parámetros de configuración "settings" y otra con los parámetros experimentales "experimental_parameters".
+Archivo JSON "parameters.json" donde se encontrará una estructura que contiene los parámetros de un experimento computacional a ejecutar. 
 
-A continuación se muestra el contenido del archivo parameters.json de un experimento. Se puede observar que dentro de los paŕametros de configuración (settings) hay 2 parámetros "N" y "step" cuyos valores a explorar se especifican en una lista para cada uno. Por otro lado, en los parámetros experimentales (experimental_parameters) se especfican 6 parámetros. Dentro de settings y de experimental_parameters uno puede colocar todos los parámetros requeridos en el experiemnto a ejecutar usando python. Se adjunta en el repositorio una plantilla del archivo JSON que uno debería utilizar cargando los parámetros nombres y valores a explorar en el experimento de su interrés.
+A continuación se muestra el contenido del archivo parameters.json de un experimento. Se puede observar que dentro uno puede colocar todos los parámetros requeridos en el experiemnto a ejecutar usando python. Se adjunta en el repositorio una plantilla del archivo JSON que uno debería utilizar cargando los parámetros nombres y valores a explorar en el experimento de su interrés.
 
 """
 {
-
-    "settings": {
+    "parameters": {
         "N": [10],
-        "step": [2]
-    },
-
-    "experimental_parameters": {
+        "step": [2],
         "number_agents": [5, 10],
         "alternatives_number": [2, 3],
         "maximum_number_practical_arguments": [5, 10],
@@ -20,6 +16,22 @@ A continuación se muestra el contenido del archivo parameters.json de un experi
         "maximum_attacks_density_value": [0.2],
         "resource_boundness_density": [0.1]
     }
+
 }
 """
+
+Luego a partir del archivo JSON es posible generar un archivo csv con todas las configuraciones posibles de valores de los parámetros experimentales
+especificados en el JSON que son los que se desearían explorar. Esto se logra con el archivo get_configurations.py. Cada configuración estará representada mediante un string donde los valores de los paŕametros estarán separados por comas en el orden en el que fueron declarados en el JSON file. Los dos primeros valores corresponderán al estado del experimento (si no fue ejecutado 0, si está en ejecución i y si ha finalizado f) y un id numerico. Por ejemplo, una configuracion posible siguiendo el ejemplo sería "0,0,5,2,5,2,0.2,0.1" donde el primer elemento es el status, el segundo el id, el tercero number_agents, el cuarto alternatives_number, y así sucesivamente hasta el último parámetro. El archivo generado se llamará configurations.csv.
+
+Finalmente, resta ejecutar cada una de las configuraciones generadas. esto se logra con el archivo de bash run_experiments.sh. Este file lee las configuraciones del archivo configurations.csv (las que tienen status = "0", es decir, auqellas que no hay sido ejecutadas nunca) y ejecuta los scripts de python correspondientes. El stript de python a ejecutar se demonina main.py y recibe un único parámetro, el string correspondiente a una configuración que se lee del configurations.csv.
+
+El archivo main.py recibe un string correspondiente a una configuración (el orden de los valores corresponde al del JSON) y allí mismo principalmente le pasa los parámetros a la función que representa nuestro experimento. En el archivo main hay que importar un módulo que tiene la función que va a ejecutarse que es el experimento mismo. Esta función tiene que tener la forma "funcion_experiment(parameter1,, parameter2, ..., parameterm)". Además cuenta con unas rutinas que al dar comienzo con la ejecutcion del function_experiment modifica el status de esta configiracion en el configuration.csv a i y lo buelve a hacer cuando esto finaliza. Cabe mencionar que el guardado de resultados corre por cuenta de quien diseña el propio experimento encapsulado en funcion_experiment.
+
+
+En resumen:
+1. Crear un JSON file según el template
+2. Generar el archivo configurations.csv ejecutando la linea python3 get_configurations.py
+3. Encapsular el experimento propio en una funcion de la forma function_experiment(parameter1, parameter2, ..., parameterm) donde parameter1, parameter2, paramenterm corresponden a los parameteros del json en el orden en el que fueron declarados.
+4. Ejecutar la linea bash run_experiments.sh
+
 
