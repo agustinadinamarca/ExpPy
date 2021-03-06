@@ -10,7 +10,7 @@ Para utilizar *ExpPy* tiene que realizar lo siguiente:
 
 A continuación se muestra el contenido del archivo *"parameters.json"* de un experimento hipotético.
 
-"""
+```
 {
     "parameters": {
         "N": [10],
@@ -24,7 +24,7 @@ A continuación se muestra el contenido del archivo *"parameters.json"* de un ex
     }
 
 }
-"""
+```
 
 Luego a partir del archivo JSON es posible generar un archivo csv con todas las configuraciones posibles de valores de los parámetros experimentales
 especificados en el JSON que son los que se desearían explorar. Esto se logra con el archivo get_configurations.py. Cada configuración estará representada mediante un string donde los valores de los paŕametros estarán separados por comas en el orden en el que fueron declarados en el JSON file. Los dos primeros valores corresponderán al estado del experimento (si no fue ejecutado 0, si está en ejecución i y si ha finalizado f) y un id numerico. Por ejemplo, una configuracion posible siguiendo el ejemplo sería "0,0,5,2,5,2,0.2,0.1" donde el primer elemento es el status, el segundo el id, el tercero number_agents, el cuarto alternatives_number, y así sucesivamente hasta el último parámetro. El archivo generado se llamará configurations.csv.
