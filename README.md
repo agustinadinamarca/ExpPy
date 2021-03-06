@@ -6,9 +6,7 @@
 
 Para utilizar *ExpPy* tiene que realizar lo siguiente:
 
-1. Cargar los parámetros que existen en su experimento computacional en un archivo JSON denominado *"parameters.json"* (ver template adjunto). Este archivo presenta una estructura de datos con un único atributo denominado *"parameters"*. Este atributo es un único objeto cuyos atributos son los parámetros del experimento de interés. Cada uno de estos atributos tiene asignado una lista con valores que queremos que tomen.
-
-A continuación se muestra el contenido del archivo *"parameters.json"* de un experimento hipotético.
+1. Cargar los parámetros que existen en su experimento computacional en un archivo JSON denominado *"parameters.json"* (ver template adjunto). Este archivo presenta una estructura de datos con un único atributo denominado *"parameters"*. Este atributo es un único objeto cuyos atributos son los parámetros del experimento de interés. Cada uno de estos atributos tiene asignado una lista con valores que queremos que tomen. A continuación se muestra el contenido del archivo *"parameters.json"* de un experimento hipotético que presenta 8 parámetros (*"N", "step", "number_agents", "alternatives_number", "maximum_number_practical_arguments", "maximum_number_epistemic_arguments", "maximum_attacks_density_value" y "resource_boundness_density"*). Entre "[ ]" se listan tantos valores de cada variable como se quienan a explorar.
 
 ```
 {
@@ -26,7 +24,7 @@ A continuación se muestra el contenido del archivo *"parameters.json"* de un ex
 }
 ```
 
-Luego a partir del archivo JSON es posible generar un archivo csv con todas las configuraciones posibles de valores de los parámetros experimentales
+2. Luego a partir del archivo JSON es posible generar un archivo csv con todas las configuraciones posibles de valores de los parámetros experimentales
 especificados en el JSON que son los que se desearían explorar. Esto se logra con el archivo get_configurations.py. Cada configuración estará representada mediante un string donde los valores de los paŕametros estarán separados por comas en el orden en el que fueron declarados en el JSON file. Los dos primeros valores corresponderán al estado del experimento (si no fue ejecutado 0, si está en ejecución i y si ha finalizado f) y un id numerico. Por ejemplo, una configuracion posible siguiendo el ejemplo sería "0,0,5,2,5,2,0.2,0.1" donde el primer elemento es el status, el segundo el id, el tercero number_agents, el cuarto alternatives_number, y así sucesivamente hasta el último parámetro. El archivo generado se llamará configurations.csv.
 
 Finalmente, resta ejecutar cada una de las configuraciones generadas. esto se logra con el archivo de bash run_experiments.sh. Este file lee las configuraciones del archivo configurations.csv (las que tienen status = "0", es decir, auqellas que no hay sido ejecutadas nunca) y ejecuta los scripts de python correspondientes. El stript de python a ejecutar se demonina main.py y recibe un único parámetro, el string correspondiente a una configuración que se lee del configurations.csv.
