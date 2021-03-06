@@ -1,8 +1,14 @@
 # ExpPy
 
-Archivo JSON "parameters.json" donde se encontrará una estructura que contiene los parámetros de un experimento computacional a ejecutar. 
+*ExpPy* es un software que permite automatizar y sistematizar la ejecución de un experimento o simulación computacionales desarrolladas en *Python* para cuando se quiere explorar conjuntos de valores para sus parámetros para descubrir cómo responde el sistema ante los cambios en los valores de sus parámetros.
 
-A continuación se muestra el contenido del archivo parameters.json de un experimento. Se puede observar que dentro uno puede colocar todos los parámetros requeridos en el experiemnto a ejecutar usando python. Se adjunta en el repositorio una plantilla del archivo JSON que uno debería utilizar cargando los parámetros nombres y valores a explorar en el experimento de su interrés.
+## Descripción
+
+Para utilizar *ExpPy* tiene que realizar lo siguiente:
+
+1. Cargar los parámetros que existen en su experimento computacional en un archivo JSON denominado *"parameters.json"* (ver template adjunto). Este archivo presenta una estructura de datos con un único atributo denominado *"parameters"*. Este atributo es un único objeto cuyos atributos son los parámetros del experimento de interés. Cada uno de estos atributos tiene asignado una lista con valores que queremos que tomen.
+
+A continuación se muestra el contenido del archivo *"parameters.json"* de un experimento hipotético.
 
 """
 {
