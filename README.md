@@ -54,8 +54,11 @@ l archivo main.py recibe un string correspondiente a una configuración (el orde
 ## Uso
 
 1. Cargar los parámetros del experimento de interés en *"parameters.json"*.
-2. Encapsular el experimento de interés, desarrollado en *Python*, en la función "my_function" de "my_experiment.py". Esta función recibe tantos argumentos como parámetros se hayan declarado en "parameters.json" y en el orden en el que fueron declarados.
-3. Generar *configurations.csv* ejecutando en una terminal de linux la línea: `python3 get_configurations.py`
+2. Encapsular el experimento de interés, desarrollado por usted en *Python*, en la función "my_function" de "my_experiment.py". Esta función recibe tantos argumentos como parámetros se hayan declarado en "parameters.json" y en el orden en el que fueron dispuestos.
+3. Generar *"configurations.csv"* ejecutando en una terminal de linux la línea: `python3 get_configurations.py`
 5. Ejecutar los experimentos en una terminal de linux mediante la línea: `bash run_experiments.sh`
 
+## Nota
+
+El software *PyExp* está diseñado de manera tal que si en la ejecución de los experimentos computacionales ocurre una interrupción en la misma usted pueda continuar con los experimentos de las configuraciones restantes sin tener que ejecutar configuraciones que ya fueron ejecutadas. Simplmente, frente a una interrupción, para continuar con los experimentos faltantes ejecute la siguiente línea en una terminal de linux: `bash run_experiments.sh`.
 
