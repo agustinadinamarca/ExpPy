@@ -22,13 +22,13 @@ Para utilizar *ExpPy* tiene que realizar lo siguiente:
 }
 ```
 
-2. Generar todas las configuraciones de valores de parámetros especificados en *"parameters.json"* y guardarlas en el archivo *"configurations.csv"*. Esto se logra ejecutando *"get_configurations.py"* de la sigiente forma:
+2. Generar y guardar todas las configuraciones de valores de parámetros especificados en *"parameters.json"*. Esto se logra ejecutando *"get_configurations.py"* de la sigiente forma:
 
 ```
 python3 get_configurations.py
 ```
 
-Como resultado se crea el archivo *"configurations.csv"*. A continuación se muestra un fragmento representativo de las configuraciones objenidas para un experimento hipotético. La primera línea corresponde al header del csv donde se especifican los nombres de las columnas. La primera de ellas se denomina "status" y representa el estado del experimento para una configuración de valores de parámetros. status puede adoptar los siguientes valores {0, i, f}. 0, no ha sido ejecutado, i se ha iniciado, y f ha finalizado. Al crearse por primera vez los status de todas las configuraciones es 0. La segunda columna es una identificación denominada id, es un valor entero positivo, 0 para la primera configuración, y M-1 para la última. Luego, la tercera y demás columnas son los parámetros del experimento en el orden en el que fueron declarados en el JSON. Cada configuración representa una fila en el archivo donde los valores estan separados por comas.
+Como resultado se crea el archivo *"configurations.csv"*. A continuación se muestra un fragmento representativo de las configuraciones objenidas para un experimento hipotético.
 
 ```
 status,id,param1,param2,...,paramN
@@ -37,10 +37,12 @@ status,id,param1,param2,...,paramN
 .
 .
 .
-0,N,10,0.3,...,2
+0,M,10,0.3,...,2
 
 ```
+La primera fila (*"status,id,param1,param2,...,paramN"*) corresponde al header del csv en la que se especifican los nombres de las columnas separados por comas. El resto de las filas representan configuraciones de valores de parámetros (ej. *"0,0,5,0.1,...,1"*). La primera columna se denomina *"status"* y representa el estado del experimento para cierta configuración y puede adoptar los siguientes valores *{0, i, f}* (*"0"*: no ejecutado, *"i"*: iniciado, y *"f"*: finalizado). Al crearse por primera vez *"configurations.csv"* los *"status"* de todas las configuraciones son *"0"*. Luego, la segunda columna llamada *"id"* es la identificación de la configuración y es un valor entero positivo. Así, si hay M (M > 0) configuraciones, el *"id"* es *0* para la primera configuración y *M - 1* para la última. Finalmente, las columnas siguientes son los valores de los parámetros del experimento, separados por comas, dispuestos en el orden en el que fueron declarados en *"parameters.json"*.
 
+3. 
 
 Finalmente, resta ejecutar cada una de las configuraciones generadas. esto se logra con el archivo de bash run_experiments.sh. Este file lee las configuraciones del archivo configurations.csv (las que tienen status = "0", es decir, auqellas que no hay sido ejecutadas nunca) y ejecuta los scripts de python correspondientes. El stript de python a ejecutar se demonina main.py y recibe un único parámetro, el string correspondiente a una configuración que se lee del configurations.csv.
 
