@@ -6,26 +6,41 @@
 
 Para utilizar *ExpPy* tiene que realizar lo siguiente:
 
-1. Cargar los parámetros que existen en su experimento computacional en un archivo JSON denominado *"parameters.json"* (ver template adjunto). Este archivo presenta una estructura de datos con un único atributo denominado *"parameters"*. Este atributo es un único objeto cuyos atributos son los parámetros del experimento de interés. Cada uno de estos atributos tiene asignado una lista con valores que queremos que tomen. A continuación se muestra el contenido del archivo *"parameters.json"* de un experimento hipotético que presenta 8 parámetros (*"N", "step", "number_agents", "alternatives_number", "maximum_number_practical_arguments", "maximum_number_epistemic_arguments", "maximum_attacks_density_value" y "resource_boundness_density"*). Entre "[ ]" se listan tantos valores de cada variable como se quienan a explorar.
+1. Cargar los parámetros que existen en su experimento computacional en un archivo JSON denominado *"parameters.json"* (ver template adjunto). Este archivo presenta una estructura de datos con un único atributo denominado *"parameters"*. Este es un único objeto cuyos atributos son los parámetros del experimento de interés. Cada uno de estos atributos tiene asignado una lista con valores que queremos que adopten. A continuación se muestra el contenido del archivo *"parameters.json"* de un experimento hipotético que presenta N parámetros (*"param1", "param2", ..., "paramN"). Entre "[ ]" se listan tantos valores de cada variable como se quienan explorar.
 
 ```
 {
     "parameters": {
-        "N": [10],
-        "step": [2],
-        "number_agents": [5, 10],
-        "alternatives_number": [2, 3],
-        "maximum_number_practical_arguments": [5, 10],
-        "maximum_number_epistemic_arguments": [2, 4],
-        "maximum_attacks_density_value": [0.2],
-        "resource_boundness_density": [0.1]
+        "param1": [5, 10],
+        "param2": [0.1, 0.2, 0.3],
+        .
+        .
+        .
+        "paramN": [1, 2]
     }
 
 }
 ```
 
-2. Luego a partir del archivo JSON es posible generar un archivo csv con todas las configuraciones posibles de valores de los parámetros experimentales
-especificados en el JSON que son los que se desearían explorar. Esto se logra con el archivo get_configurations.py. Cada configuración estará representada mediante un string donde los valores de los paŕametros estarán separados por comas en el orden en el que fueron declarados en el JSON file. Los dos primeros valores corresponderán al estado del experimento (si no fue ejecutado 0, si está en ejecución i y si ha finalizado f) y un id numerico. Por ejemplo, una configuracion posible siguiendo el ejemplo sería "0,0,5,2,5,2,0.2,0.1" donde el primer elemento es el status, el segundo el id, el tercero number_agents, el cuarto alternatives_number, y así sucesivamente hasta el último parámetro. El archivo generado se llamará configurations.csv.
+2. Generar todas las configuraciones de valores de parámetros especificados en *"parameters.json"* y guardarlas en el archivo *"configurations.csv"*. Esto se logra ejecutando *"get_configurations.py"* de la sigiente forma:
+
+```
+python3 get_configurations.py
+```
+
+Como resultado se crea el archivo *"configurations.csv"*. A continuación se muestra un fragmento representativo de las configuraciones objenidas para un experimento hipotético. La primera línea corresponde al header del csv donde se especifican los nombres de las columnas. La primera de ellas se denomina "status" y representa el estado del experimento para una configuración de valores de parámetros. status puede adoptar los siguientes valores {0, i, f}. 0, no ha sido ejecutado, i se ha iniciado, y f ha finalizado. Al crearse por primera vez los status de todas las configuraciones es 0. La segunda columna es una identificación denominada id, es un valor entero positivo, 0 para la primera configuración, y M-1 para la última. Luego, la tercera y demás columnas son los parámetros del experimento en el orden en el que fueron declarados en el JSON. Cada configuración representa una fila en el archivo donde los valores estan separados por comas.
+
+```
+status,id,param1,param2,...,paramN
+0,0,5,0.1,...,1
+0,1,5,0.1,...,2
+.
+.
+.
+0,N,10,0.3,...,2
+
+```
+
 
 Finalmente, resta ejecutar cada una de las configuraciones generadas. esto se logra con el archivo de bash run_experiments.sh. Este file lee las configuraciones del archivo configurations.csv (las que tienen status = "0", es decir, auqellas que no hay sido ejecutadas nunca) y ejecuta los scripts de python correspondientes. El stript de python a ejecutar se demonina main.py y recibe un único parámetro, el string correspondiente a una configuración que se lee del configurations.csv.
 
