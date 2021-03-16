@@ -39,7 +39,15 @@ def extract_json_parameters(file_name):
     f.close()
 
     parameters = list(data["parameters"].values())
+
+    subparameters = []
+    for structure in parameters:
+        subparameters += list(structure.values())
     parameters_names = list(data["parameters"].keys())
+
+    parameters_names = []
+    for structure in parameters:
+        parameters_names += list(structure.keys())
 
     header = "status,id,"
 
@@ -50,7 +58,8 @@ def extract_json_parameters(file_name):
         else:
             header += parameters_names[i]
 
-    return parameters, header
+    return subparameters, header
+
 
 
 def get_configurations(parameters_json_file_name):
