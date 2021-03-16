@@ -1,8 +1,15 @@
 {
     "parameters": {
-        "param1": [5, 10],
-        "param2": [2],
-        "paramN": [0.1, 0.5, 0.9]
+        "parameters_type_1": {
+            "param1": [5, 10],
+            "param2": [2],
+            "paramN": [0.1, 0.5, 0.9]
+        },
+        
+        "parameters_type_2": {
+            "param1": [5, 10, 12],
+            "param2": [2, 3],
+            "paramM": [0.1, 0.3]
+        }
     }
-
 }
